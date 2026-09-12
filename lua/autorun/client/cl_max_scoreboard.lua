@@ -307,7 +307,7 @@ vgui.Register("MaxScoreboard", PANEL, "Panel")
 
 local scoreboard
 
-function GM:ScoreboardShow()
+function GAMEMODE:ScoreboardShow()
 	if not IsValid(scoreboard) then
 		scoreboard = vgui.Create("MaxScoreboard")
 	end
@@ -318,7 +318,7 @@ function GM:ScoreboardShow()
 	return true
 end
 
-function GM:ScoreboardHide()
+function GAMEMODE:ScoreboardHide()
 	if IsValid(scoreboard) and not scoreboard.pinned then
 		scoreboard:SetVisible(false)
 	end
