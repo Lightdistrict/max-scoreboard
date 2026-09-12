@@ -23,12 +23,12 @@ surface.CreateFont(FONT_TITLE, { font = "Roboto", size = 26, weight = 800 })
 
 local flagCache = {}
 local function GetFlagMaterial(code)
-	code = code or "unknown"
+	code = code or "_unknown"
 	if not flagCache[code] then
 		local path = "max_scoreboard/flags/" .. code .. ".png"
 		local mat = Material(path, "noclamp smooth")
 		if mat:IsError() then
-			mat = Material("max_scoreboard/flags/unknown.png", "noclamp smooth")
+			mat = Material("max_scoreboard/flags/_unknown.png", "noclamp smooth")
 		end
 		flagCache[code] = mat
 	end
@@ -39,10 +39,10 @@ local groupCache = {}
 local function GetGroupMaterial(group)
 	group = group or "user"
 	if not groupCache[group] then
-		local path = "max_scoreboard/groups/" .. group .. ".png"
+		local path = "max_scoreboard/groups/group_" .. group .. ".png"
 		local mat = Material(path, "noclamp smooth")
 		if mat:IsError() then
-			mat = Material("max_scoreboard/groups/user.png", "noclamp smooth")
+			mat = Material("max_scoreboard/groups/group_user.png", "noclamp smooth")
 		end
 		groupCache[group] = mat
 	end
@@ -230,8 +230,8 @@ function PANEL:PaintRow(ply, y, w)
 	x = x + ROW_HEIGHT - 6 + 6
 
 	-- SAM/CAMI usergroup icon
-	local group = ply:GetUserGroup()
-	if group and group ~= "user" then
+	local group = string.lower(ply:GetUserGroup() or "user")
+	if group ~= "user" then
 		surface.SetDrawColor(255, 255, 255, 255)
 		surface.SetMaterial(GetGroupMaterial(group))
 		surface.DrawTexturedRect(x, midY - 9, 18, 18)
